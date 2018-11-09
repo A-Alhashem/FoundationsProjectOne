@@ -21,27 +21,35 @@ def print_menu():
     """
     Print the items in the menu dictionary.
     """
+    print()
     print("We have the following: ")
+    print()
+    print("---------------------------------------------")
     for x in menu:
-        print ("%s is %sKD" % (x, menu[x]))
+        print ("- %s is: %.3fKD" % (x, menu[x]))
+    print("---------------------------------------------")
+    print()
 
 
 def print_originals():
     """
     Print the original flavor cupcakes.
     """
-    print("Our original flavor cupcakes (KD %s each):" % original_price)
+    print(" ==== Our original flavor cupcakes (KD %.3f each) =======" % original_price)
+    print()
     for x in original_flavors:
-        print (x)
-
+        print ("- %s" % (x))
+    print()
 
 def print_signatures():
     """
     Print the signature flavor cupcakes.
     """
-    print("Our signature flavor cupcake (KD %s each):" % signature_price)
+    print(" ==== Our signature flavor cupcake (KD %.3f each) ====" % signature_price)
+    print()
     for x in signature_flavors:
-        print (x)
+        print ("- %s" % (x))
+    print ()
 
 
 def is_valid_order(order):
@@ -63,12 +71,20 @@ def get_order():
     Repeatedly ask customer for order until they end their order by typing "Exit".
     """
     order_list = []
-    order = str(input("Please enter your order in exact words, or type exit to cancel: "))
+    print("Please enter your order in exact words, or type \"exit\" to cancel: ")
+    print()
+    order = str(input())
     order = order.lower()
     while order != "exit":
         if is_valid_order(order):
             order_list.append(order)
+        else:
+        	print("		=====================================")
+        	print("I'm sorry, we currently do not have \"%s\", please choose another, or use lower case letters:" % order.upper())
+        	print("		=====================================")
+        	print()
         order = input().lower()
+    print()
 
     return order_list
 
@@ -107,7 +123,32 @@ def print_order(order_list):
     """
     print()
     print("Your order is: ")
-    print (order_list)
-    print("total price is %s KD" % get_total_price(order_list))
+    print()
+    for order in order_list:
+    	
+    	print("- %s" % order)
+    print()
+    print()
 
-    # NOTE TO INSTRUCTOR, I tried but I actually don't remember how to do this step!
+    total_price = get_total_price(order_list)
+    print("The total price is: ")
+    print("        ____________")
+    print("       | %.3f KD   |" % total_price)
+    print("        ------------")
+
+    import time
+
+    print("						Checking credit card validity based on price... ")
+    time.sleep(3)
+    if accept_credit_card(total_price):
+    	print("					\"We do accept credit card if you wish to use it\"")
+    else:
+    	print("					\"We are sorry, we only accept \"CASH\" for orders under 5 KD\"")
+
+    print()
+    time.sleep(2)
+    print("						Thank you for shopping at \"%s\"" % cupcake_shop_name.upper())
+    print("							Have a great day!")
+    print()
+
+  
